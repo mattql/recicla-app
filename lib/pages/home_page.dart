@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:recicla_app/Controllers/coletasController.dart';
-import 'package:recicla_app/pages/login_page.dart';
+import 'package:recicla_app/services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,71 +32,6 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  void _confirmarLogout(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirmar Logout'),
-          content: Text('Tem certeza de que deseja sair?'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('cancelar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('sair'),
-              onPressed: () async {
-                try {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pop(); // Fecha o popup
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => LoginPage(),
-                    ),
-                  ); // Navega para a tela de login
-                } catch (e) {
-                  print('Erro ao fazer logout: $e');
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _mostrarInformacoesUsuario(BuildContext context) {
-    // Obtém a instância do Firebase Auth
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    // Obtém o usuário atualmente autenticado
-    User? user = auth.currentUser;
-
-    String nomeDoUsuario = user?.displayName ?? 'Nome não disponível';
-    String emailDoUsuario = user?.email ?? 'Email não disponível';
-
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Container(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text('usuario: $nomeDoUsuario'),
-                Text('email: $emailDoUsuario'),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.gps_fixed_rounded),
-            tooltip: "pegar localização atual",
+            tooltip: "localização atual",
             onPressed: () {
               atualizarPosicao();
             },
@@ -122,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.logout_rounded),
               tooltip: "logout",
               onPressed: () {
-                _confirmarLogout(context);
+                AuthService.confirmarLogout(context);
               })
         ],
       ),
@@ -157,7 +91,7 @@ class _HomePageState extends State<HomePage> {
             IconButton(
                 icon: Icon(Icons.account_circle_rounded),
                 onPressed: () {
-                  _mostrarInformacoesUsuario(context);
+                  AuthService.mostrarInformacoesUsuario(context);
                 }),
           ],
         ),
