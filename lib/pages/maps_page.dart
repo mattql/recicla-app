@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:recicla_app/Controllers/coletasController.dart';
+import 'package:recicla_app/pages/addPost_page.dart';
 import 'package:recicla_app/pages/home_page.dart';
 import 'package:recicla_app/services/auth_service.dart';
 
@@ -95,7 +96,10 @@ class _MapsPageState extends State<MapsPage> {
                 }),
             IconButton(
                 icon: Icon(Icons.add_photo_alternate_rounded),
-                onPressed: () {}), // vai para pagina de adicionar post
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddPostPage()));
+                }), // vai para pagina de adicionar post
             IconButton(
                 icon: Icon(Icons.account_circle_rounded),
                 onPressed: () {
