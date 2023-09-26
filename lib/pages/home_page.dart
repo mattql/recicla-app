@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:recicla_app/Controllers/coletasController.dart';
+import 'package:recicla_app/pages/posts_page.dart';
 import 'package:recicla_app/services/auth_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,11 +36,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Text(
-          "Recicla",
+          "Pontos de reciclagem",
           style: TextStyle(color: Colors.black87),
         ),
         backgroundColor: Colors.greenAccent,
@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
               zoom: 4,
             ),
             myLocationEnabled: true,
+            myLocationButtonEnabled: false,
             onMapCreated: (GoogleMapController controller) {
               setState(() {
                 mapController = controller;
@@ -88,6 +89,14 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(icon: Icon(Icons.home_rounded), onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.add_circle_outline_rounded),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PostsPage()),
+                  );
+                }),
             IconButton(
                 icon: Icon(Icons.account_circle_rounded),
                 onPressed: () {
