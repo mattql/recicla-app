@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:recicla_app/pages/addPost_page.dart';
-import 'package:recicla_app/pages/maps_page.dart';
+import 'package:recicla_app/pages/home_page.dart';
 import 'package:recicla_app/services/auth_service.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class AddPostPage extends StatefulWidget {
+  const AddPostPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<AddPostPage> createState() => _AddPostPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _AddPostPageState extends State<AddPostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: Text(
-          "Pontos de reciclagem",
+          "Adicionar ponto",
           style: TextStyle(color: Colors.black87),
         ),
         backgroundColor: Colors.greenAccent,
@@ -31,7 +29,25 @@ class _HomePageState extends State<HomePage> {
               })
         ],
       ),
-      body: Column(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 20,
+            height: 20,
+          ),
+          Center(
+              child: ElevatedButton(
+            child: Text(
+              "adicionar novo ponto",
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {},
+            style:
+                ElevatedButton.styleFrom(backgroundColor: Colors.greenAccent),
+          )),
+        ],
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.greenAccent,
         child: Row(
@@ -39,19 +55,10 @@ class _HomePageState extends State<HomePage> {
           children: [
             IconButton(
                 icon: Icon(Icons.home_rounded),
-                onPressed: () {}), // vai para inicio da pagina
-            IconButton(
-                icon: Icon(Icons.add_photo_alternate_rounded),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AddPostPage()));
-                }), // vai para pagina de adicionar post
-            IconButton(
-                icon: Icon(Icons.map_rounded),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MapsPage()));
-                }), // vai para pagina do mapa geral
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                }),
             IconButton(
                 icon: Icon(Icons.account_circle_rounded),
                 onPressed: () {
