@@ -15,7 +15,8 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
   TextEditingController _usernameTextController = TextEditingController();
-  bool isLoading = false;
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +60,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 20,
                 ),
                 loginRegisterButton(context, false, () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
                   try {
                     UserCredential userCredential = await FirebaseAuth.instance
                         .createUserWithEmailAndPassword(
@@ -91,8 +95,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
                     ScaffoldMessenger.of(context)
                         .showSnackBar(SnackBar(content: Text(errorMessage)));
+                  } finally {
+                    setState(() {
+                      _isLoading = false;
+                    });
                   }
-                })
+                }, _isLoading)
               ],
             ),
           ),

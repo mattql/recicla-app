@@ -15,6 +15,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +49,9 @@ class _LoginPageState extends State<LoginPage> {
                   height: 20,
                 ),
                 loginRegisterButton(context, true, () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: _emailTextController.text,
@@ -65,8 +70,12 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     ScaffoldMessenger.of(context)
                         .showSnackBar(SnackBar(content: Text(errorMessage)));
+                  } finally {
+                    setState(() {
+                      _isLoading = false;
+                    });
                   }
-                }),
+                }, _isLoading),
                 loginOption()
               ],
             ),

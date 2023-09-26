@@ -37,7 +37,7 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordtype,
 }
 
 Container loginRegisterButton(
-    BuildContext context, bool isLogin, Function onTap) {
+    BuildContext context, bool isLogin, Function onTap, bool isLoading) {
   return Container(
     width: MediaQuery.of(context).size.width,
     height: 50,
@@ -45,13 +45,25 @@ Container loginRegisterButton(
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(90)),
     child: ElevatedButton(
       onPressed: () {
-        onTap();
+        if (!isLoading) {
+          onTap();
+        }
       },
-      child: Text(
-        isLogin ? 'login' : 'registre-se',
-        style: const TextStyle(
-            color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
-      ),
+      child: isLoading
+          ? SizedBox(
+              width: 20.0,
+              height: 20.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              ),
+            )
+          : Text(
+              isLogin ? 'login' : 'registre-se',
+              style: const TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+            ),
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith((states) {
             if (states.contains(MaterialState.pressed)) {
