@@ -60,11 +60,23 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 loginRegisterButton(context, false, () async {
                   try {
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    UserCredential userCredential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                      email: _emailTextController.text,
+                      password: _passwordTextController.text,
+                    );
+
+                    // Agora que o usuário está registrado, vamos adicionar o nome ao perfil
+                    await userCredential.user!.updateProfile(
+                        displayName: _usernameTextController.text);
+
+                    // Atualize o nome no Firebase
+                    await userCredential.user!.reload();
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
                   } on FirebaseAuthException catch (e) {
                     String errorMessage;
                     if (e.code == 'weak-password') {
