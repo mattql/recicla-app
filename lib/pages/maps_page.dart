@@ -40,7 +40,7 @@ class _MapsPageState extends State<MapsPage> {
       appBar: AppBar(
         title: Text(
           "Localização dos pontos",
-          style: TextStyle(color: Colors.black87),
+          style: TextStyle(color: Colors.black87, fontSize: 18),
         ),
         backgroundColor: Colors.greenAccent,
         iconTheme: IconThemeData(color: Colors.black87),
