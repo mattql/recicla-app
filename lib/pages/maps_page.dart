@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:recicla_app/Controllers/coletasController.dart';
+import 'package:recicla_app/Controllers/pontos.dart';
+import 'package:recicla_app/Controllers/pontos_repository.dart';
 import 'package:recicla_app/pages/addPost_page.dart';
 import 'package:recicla_app/pages/home_page.dart';
 import 'package:recicla_app/services/auth_service.dart';
@@ -16,6 +18,7 @@ class MapsPage extends StatefulWidget {
 class _MapsPageState extends State<MapsPage> {
   ColetasController coletasController = ColetasController();
   GoogleMapController? mapController;
+  List<Pontos> listaPontos = PontosRepository().pontos;
 
   void moverParaLocalizacao(double latitude, double longitude) {
     mapController?.animateCamera(
@@ -32,6 +35,31 @@ class _MapsPageState extends State<MapsPage> {
       moverParaLocalizacao(coletasController.lat, coletasController.long);
     }
     setState(() {});
+  }
+
+  void onMarkerTapped(Pontos ponto) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Image.network(ponto.foto),
+                Text(
+                  '${ponto.nome}',
+                  style: TextStyle(fontSize: 20, color: Colors.black87),
+                ),
+                Text('${ponto.endereco}'),
+                // Adicione mais informações conforme necessário
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -68,19 +96,35 @@ class _MapsPageState extends State<MapsPage> {
           print(local.long);
 
           return GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: LatLng(-14.235004, -51.92528), // Brasil
-              zoom: 4,
-            ),
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            onMapCreated: (GoogleMapController controller) {
-              setState(() {
-                mapController = controller;
-                atualizarPosicao(); // atualiza o mapa para posiçao da localização
-              });
-            },
-          );
+              initialCameraPosition: CameraPosition(
+                target: LatLng(-14.235004, -51.92528),
+                zoom: 40,
+              ),
+              myLocationEnabled: true,
+              myLocationButtonEnabled: false,
+              onMapCreated: (GoogleMapController controller) {
+                setState(() {
+                  mapController = controller;
+                  atualizarPosicao(); // atualiza o mapa para posiçao da localização
+                });
+              },
+              markers: Set<Marker>.from(
+                listaPontos.map((ponto) {
+                  return Marker(
+                      markerId: MarkerId(
+                          ponto.nome), // Um identificador único para o marcador
+                      position: LatLng(ponto.latitude,
+                          ponto.longitude), // Posição do marcador
+                      infoWindow: InfoWindow(
+                        title: ponto.nome, // Título do marcador
+                        snippet: ponto
+                            .endereco, // Informações adicionais (pode ser o endereço))
+                      ),
+                      onTap: () {
+                        onMarkerTapped(ponto);
+                      });
+                }),
+              ));
         }),
       ),
       bottomNavigationBar: BottomAppBar(
