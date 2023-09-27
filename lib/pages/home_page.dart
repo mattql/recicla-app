@@ -55,13 +55,12 @@ class _HomePageState extends State<HomePage> {
               _navigateToMap(ponto);
             },
             child: Card(
-              elevation: 4, // Sombra do card
+              elevation: 4,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Imagem
                   Container(
-                    height: 150, // Altura da imagem
+                    height: 150,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(ponto.foto),
@@ -69,7 +68,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  // Nome do local
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -78,7 +76,6 @@ class _HomePageState extends State<HomePage> {
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  // Endereço
                   Padding(
                     padding: const EdgeInsets.only(
                         left: 8.0, right: 8.0, bottom: 8.0),
@@ -103,19 +100,19 @@ class _HomePageState extends State<HomePage> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                   );
-                }), // vai para inicio da pagina
+                }),
             IconButton(
                 icon: Icon(Icons.add_photo_alternate_rounded),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddPostPage()));
-                }), // vai para pagina de adicionar post
+                }),
             IconButton(
                 icon: Icon(Icons.map_rounded),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => MapsPage()));
-                }), // vai para pagina do mapa geral
+                }),
             IconButton(
                 icon: Icon(Icons.account_circle_rounded),
                 onPressed: () {

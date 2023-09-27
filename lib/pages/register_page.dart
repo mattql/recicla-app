@@ -69,12 +69,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       email: _emailTextController.text,
                       password: _passwordTextController.text,
                     );
-
-                    // Agora que o usuário está registrado, vamos adicionar o nome ao perfil
                     await userCredential.user!.updateProfile(
                         displayName: _usernameTextController.text);
 
-                    // Atualize o nome no Firebase
                     await userCredential.user!.reload();
 
                     Navigator.push(

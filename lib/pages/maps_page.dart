@@ -24,7 +24,7 @@ class _MapsPageState extends State<MapsPage> {
     mapController?.animateCamera(
       CameraUpdate.newLatLngZoom(
         LatLng(latitude, longitude),
-        18, // Zoom level
+        18,
       ),
     );
   }
@@ -53,7 +53,6 @@ class _MapsPageState extends State<MapsPage> {
                   style: TextStyle(fontSize: 20, color: Colors.black87),
                 ),
                 Text('${ponto.endereco}'),
-                // Adicione mais informações conforme necessário
               ],
             ),
           ),
@@ -105,20 +104,17 @@ class _MapsPageState extends State<MapsPage> {
               onMapCreated: (GoogleMapController controller) {
                 setState(() {
                   mapController = controller;
-                  atualizarPosicao(); // atualiza o mapa para posiçao da localização
+                  atualizarPosicao();
                 });
               },
               markers: Set<Marker>.from(
                 listaPontos.map((ponto) {
                   return Marker(
-                      markerId: MarkerId(
-                          ponto.nome), // Um identificador único para o marcador
-                      position: LatLng(ponto.latitude,
-                          ponto.longitude), // Posição do marcador
+                      markerId: MarkerId(ponto.nome),
+                      position: LatLng(ponto.latitude, ponto.longitude),
                       infoWindow: InfoWindow(
-                        title: ponto.nome, // Título do marcador
-                        snippet: ponto
-                            .endereco, // Informações adicionais (pode ser o endereço))
+                        title: ponto.nome,
+                        snippet: ponto.endereco,
                       ),
                       onTap: () {
                         onMarkerTapped(ponto);
@@ -143,7 +139,7 @@ class _MapsPageState extends State<MapsPage> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AddPostPage()));
-                }), // vai para pagina de adicionar post
+                }),
             IconButton(
                 icon: Icon(Icons.account_circle_rounded),
                 onPressed: () {

@@ -22,12 +22,12 @@ class AuthService {
               onPressed: () async {
                 try {
                   await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pop(); // Fecha o popup
+                  Navigator.of(context).pop();
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (BuildContext context) => LoginPage(),
                     ),
-                  ); // Navega para a tela de login
+                  );
                 } catch (e) {
                   print('Erro ao fazer logout: $e');
                 }

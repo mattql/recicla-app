@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recicla_app/Controllers/pontos.dart';
 import 'package:recicla_app/Controllers/pontos_repository.dart';
 import 'package:recicla_app/pages/home_page.dart';
 import 'package:recicla_app/reusable_widgets/reusable_widget.dart';
@@ -22,7 +21,6 @@ class _AddPostPageState extends State<AddPostPage> {
     String nome = _nomeTextController.text;
     if (nome.isNotEmpty && _caminhoDaImagem != null) {
       PontosRepository().adicionarPonto(nome, _caminhoDaImagem!);
-      // Limpar o campo de nome e a variável de caminho da imagem se necessário
       _nomeTextController.clear();
       setState(() {
         _caminhoDaImagem = null;
@@ -86,11 +84,11 @@ class _AddPostPageState extends State<AddPostPage> {
             ),
             SizedBox(height: 50),
             ElevatedButton.icon(
-              icon: Icon(Icons.add_a_photo), // Ícone que será exibido
-              label: Text('imagem'), // Texto do botão
+              icon: Icon(Icons.add_a_photo),
+              label: Text('imagem'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
-                backgroundColor: Colors.greenAccent, // Cor do texto do botão
+                backgroundColor: Colors.greenAccent,
               ),
               onPressed: () async {
                 _pegarImagem();
@@ -98,11 +96,11 @@ class _AddPostPageState extends State<AddPostPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton.icon(
-              icon: Icon(Icons.location_on), // Ícone que será exibido
-              label: Text('localização'), // Texto do botão
+              icon: Icon(Icons.location_on),
+              label: Text('localização'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
-                backgroundColor: Colors.greenAccent, // Cor do texto do botão
+                backgroundColor: Colors.greenAccent,
               ),
               onPressed: () {
                 _cadastrarNovoPonto();
@@ -110,11 +108,11 @@ class _AddPostPageState extends State<AddPostPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton.icon(
-              icon: Icon(Icons.add_circle), // Ícone que será exibido
-              label: Text('cadastrar novo ponto'), // Texto do botão
+              icon: Icon(Icons.add_circle),
+              label: Text('cadastrar novo ponto'),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.black,
-                backgroundColor: Colors.greenAccent, // Cor do texto do botão
+                backgroundColor: Colors.greenAccent,
               ),
               onPressed: () {},
             ),
